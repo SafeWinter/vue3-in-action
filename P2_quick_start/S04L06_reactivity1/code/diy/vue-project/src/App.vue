@@ -1,43 +1,25 @@
 <template>
-  <div class="app">
-    <div>{{ Bill.name }}</div>
-    <div>{{ Bill.age }}</div>
-    <div>{{ Bill.nested.count }}</div>
-  </div>
+  <div id="container">{{ count }}</div>
 </template>
 
 <script setup>
-import { shallowRef } from 'vue'
+import { ref, onMounted } from 'vue'
+let count = ref(1),
+  container = null
 
-let Bill = shallowRef({
-  name: 'Biil',
-  age: 18,
-  nested: {
-    count: 1
-  }
+onMounted(() => {
+  container = document.getElementById('container')
+  console.log('第一次打印：', container.innerText)
 })
 
 setTimeout(() => {
-  Bill.value.name = 'Gates'
-  Bill.value.age = 28
-  Bill.value.nested.count += 3
-  console.log('1st update')
+  count.value = 2 // 修改响应式状态
+  console.log('第二次打印：', container.innerText)
 }, 2000)
-
-setTimeout(() => {
-  Bill.value = {
-    name: 'Gates',
-    age: 38,
-    nested: {
-      count: 10
-    }
-  }
-  console.log('2nd update')
-}, 4000)
 </script>
 
 <style lang="scss" scoped>
-.app {
+#container {
   font-size: 3em;
 }
 </style>

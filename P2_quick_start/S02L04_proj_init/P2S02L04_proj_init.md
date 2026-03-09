@@ -60,7 +60,7 @@ npm create vue@3.10.3
 - **.eslintrc.cjs**：`ESLint` 的配置文件，用于检查代码错误和风格问题，`cjs` 是基于 `CommonJS` 模块化标准的配置文件的扩展名。
 - **.gitignore**：`Git` 的配置文件，用于设置无需加入版本控制的文件或文件夹。
 - **.prettierrc.json**：`Prettier` 的配置文件，`Prettier` 是一个代码格式化工具。
-- **index.html**：项目的入口 `HTML` 文件，`Vite` 将利用它来处理应用的加载。
+- **index.html**：（:star:）项目的入口 `HTML` 文件，`Vite` 将利用它来处理应用的加载。
 - **jsconfig.json**：`JavaScript` 的配置文件，用于**告诉 `VS Code` 如何处理 `JavaScript` 代码**，例如设置路径别名。
 - **package-lock.json**：锁定安装时的包的版本，确保其他人在 `npm install` 时，大家的依赖能保持一致。
 - **package.json**：定义了项目所需的各种模块以及项目的配置信息（例如项目的名称、版本、许可证等）。

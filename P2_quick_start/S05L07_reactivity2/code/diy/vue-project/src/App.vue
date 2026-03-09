@@ -1,34 +1,28 @@
 <template>
-  <div id="container">
-    <div>object.count: {{ obj.count }}</div>
-    <div>object.nested.count: {{ obj.nested.count }}</div>
-  </div>
+  <div>state.count1: {{ state.count1 }}</div>
+  <div>state.nested.count2: {{ state.nested.count2 }}</div>
 </template>
 
 <script setup>
 import { shallowReactive } from 'vue'
-
-let obj = shallowReactive({
-  count: 0,
+const state = shallowReactive({
+  count1: 0,
   nested: {
-    count: 0
+    count2: 0
   }
 })
-
 setTimeout(() => {
-  obj.count++
-  obj.nested.count++
-  console.log('1st update')
+  state.count1++
+  console.log('1. 只更新 count1')
 }, 2000)
-
 setTimeout(() => {
-  obj.nested.count = 3
-  console.log('2nd update')
+  state.nested.count2++
+  console.log('2. 只更新 nested.count2')
 }, 4000)
 </script>
 
 <style lang="scss" scoped>
-#container {
-  font-size: 3em;
+div {
+  font-size: 2em;
 }
 </style>

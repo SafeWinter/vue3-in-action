@@ -86,7 +86,7 @@ const htmlCode = '<span style="color:red">this is a test</span>'
 >
 > ```scss
 > div {
->   font-size: 5em;
+> font-size: 5em;
 > }
 > ```
 >
@@ -95,6 +95,8 @@ const htmlCode = '<span style="color:red">this is a test</span>'
 > ```markdown
 > [plugin:vite:css] Preprocessor dependency "sass-embedded" not found. Did you install it? Try `npm install -D sass-embedded`.
 > ```
+>
+> ![](../../assets/5.5.png)
 >
 > 原因：从 `Vite 3.0` 开始，处理 `.scss` 文件的方式有了变化，因此导致了该报错。
 >

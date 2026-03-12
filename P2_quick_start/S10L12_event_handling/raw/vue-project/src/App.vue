@@ -1,0 +1,21 @@
+<template>
+  <button class="context-menu-button" @contextmenu.prevent.right="handleRightClick">
+    右键点击
+  </button>
+</template>
+
+<script setup>
+function handleRightClick() {
+  console.log('你点击了鼠标右键')
+}
+</script>
+
+<style scoped>
+.context-menu-button {
+  padding: 10px 20px;
+  cursor: context-menu; /* 显示适当的鼠标指针 */
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+</style>

@@ -65,7 +65,7 @@ onMounted(async () => {
 <style scoped></style>
 ```
 
-实测截图：
+实测截图（实测代码详见 `L15_onMounted` 分支）：
 
 ![](../../assets/15.2.png)
 

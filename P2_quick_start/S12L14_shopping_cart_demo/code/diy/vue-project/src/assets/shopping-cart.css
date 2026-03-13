@@ -1,0 +1,86 @@
+body {
+  background-color: #f5f5f5;
+}
+
+#shoppingcart {
+  width: 960px;
+  margin: 50px auto;
+}
+
+#shoppingcart button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+#shoppingcart button.danger {
+  background-color: red;
+  padding: 8px;
+  border: none;
+  color: white;
+}
+
+#shoppingcart .ipt {
+  width: 60px;
+  height: 36px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-left: 50px;
+}
+
+#shoppingcart table {
+  width: 100%;
+  background-color: #fff;
+}
+
+#shoppingcart table td {
+  padding: 10px 0;
+  text-align: center;
+}
+
+.footer {
+  height: 70px;
+  background-color: #fff;
+  margin-top: 30px;
+  line-height: 70px;
+}
+
+.footer-left {
+  float: left;
+  padding-left: 24px;
+}
+
+.footer-left a,
+.footer-left span {
+  margin-left: 10px;
+}
+
+.footer-right {
+  float: right;
+  padding-right: 24px;
+}
+
+.footer-right button,
+.footer-right div {
+  display: inline-block;
+}
+
+.footer-right button {
+  background-color: #00c3f5;
+  padding: 8px 16px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.footer-right span {
+  font-weight: bold;
+  font-size: 16px;
+  color: red;
+  margin-right: 20px;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+}

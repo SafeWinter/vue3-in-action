@@ -164,7 +164,7 @@ watch(isEven, () => {
 <style scoped></style>
 ```
 
-上例并未清晰定义何为 getter 函数。实测时改为如下版本，可清晰辨认两次执行的前后顺序：
+上例并未清晰定义何为 `getter` 函数。实测时改为如下版本，可清晰辨认两次执行的前后顺序：
 
 ```js
 <template>
@@ -197,6 +197,82 @@ watch(isEven, () => {
 ![](../../assets/16.1.png)
 
 可以看到，`script` 中的函数执行 **总是先于** 视图中的函数执行，并且只在函数返回值变更时才会触发 `watch` 侦听。
+
+> [!tip]
+>
+> **DIY 增补：JavaScript 语境下的 Getter 函数**
+>
+> MDN：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+>
+> The **`get`** syntax binds an object property to a function that will be called when that property is looked up. It can also be used in [classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes).
+>
+> ```js
+> const obj = {
+>   log: ["a", "b", "c"],
+>   get latest() {
+>     return this.log[this.log.length - 1];
+>   },
+> };
+> 
+> console.log(obj.latest);
+> // Expected output: "c"
+> ```
+>
+> `getter` 函数的语法：
+>
+> ```js
+> { get prop() { /* … */ } }
+> { get [expression]() { /* … */ } }
+> ```
+>
+> 注意：`getter` 函数不能传入参数。
+>
+> - `prop`：要与给定函数绑定的属性名称。与对象初始化模块中的其他属性一样，`prop` 可以是字符串常量、数字常量或标识符。
+> - `expression`：还可以使用表达式作为计算属性的名称，将其绑定到指定的函数上。
+>
+> `expression` 示例：
+>
+> ```js
+> const expr = "foo";
+> 
+> const obj = {
+>   get [expr]() {
+>     return "bar";
+>   },
+> };
+> 
+> console.log(obj.foo); // "bar"
+> ```
+>
+> `getter` 的删除方法：使用 `delete` 关键字（`L9`）：
+>
+> ```js
+> const obj = {
+>   log: ["example", "test"],
+>   get latest() {
+>     return this.log.at(-1);
+>   },
+> };
+> console.log(obj.latest); // "test"
+> 
+> delete obj.latest;
+> ```
+>
+> `getter` 还可以用作特征检测：
+>
+> ```js
+> function isColorTypeSupported() {
+>   let supported = false;
+>   const obj = {
+>     get colorType() {
+>       supported = true;
+>       return undefined;
+>     },
+>   };
+>   document.createElement("canvas").getContext("2d", obj);
+>   return supported;
+> }
+> ```
 
 
 

@@ -365,3 +365,15 @@ function stopWatcher() {
 实测截图：
 
 ![](../../assets/17.6.png)
+
+> [!tip]
+>
+> 示例中的 `emoji` 图案的 `Markdown` 写法：
+>
+> - :stop_button:：`:stop_button:`
+> - :arrow_forward:：`:arrow_forward:`
+> - :pause_button:：`:pause_button:`
+> - :loud_sound:：`:loud_sound:`
+> - :headphones:：`:headphones:`
+> - :clipboard:：`:clipboard:`
+

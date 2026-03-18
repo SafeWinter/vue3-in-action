@@ -3,6 +3,7 @@
     <span v-for="star in 5" :key="star" class="star" @click="updateRating(star)">
       {{ rating >= star ? '★' : '☆' }}
     </span>
+    <input type="text" v-model="rating" />
   </div>
 </template>
 

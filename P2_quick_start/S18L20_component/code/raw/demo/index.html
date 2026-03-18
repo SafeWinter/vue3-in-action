@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <template id="my-template-element">
+        <div>
+            <h1>{{ count }}</h1>
+            <button @click="count++">Increment</button>
+        </div>
+    </template>
+    <script src="https://unpkg.com/vue@3.2.31"></script>
+    <script>
+      const { createApp, ref } = Vue;
+      const App = {
+        setup() {
+          const count = ref(0);
+          return { count };
+        },
+        template: "#my-template-element",
+      };
+      createApp(App).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+.app-container {
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+p {
+  font-size: 18px;
+  color: #333;
+}

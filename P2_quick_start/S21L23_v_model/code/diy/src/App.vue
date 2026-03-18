@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <h1>请对本次服务评分：</h1>
-    <Rating v-model="rating" />
+    <Rating v-model.number="rating" />
     <p v-if="rating > 0">你当前的评价为 {{ rating }} 颗星</p>
   </div>
 </template>

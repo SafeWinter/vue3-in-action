@@ -304,3 +304,11 @@ const [rating, { number }] = defineModel({
 效果验证（`649cfeb`）：
 
 ![](../../assets/23.3.png)
+
+> [!tip]
+>
+> **补充：关于 setter 的返回值**
+>
+> 通过 `setter` 实现自定义的修饰符功能时，参数 `value` 即响应式状态的 `.value` 值，最终务必返回某个值，否则会报堆栈溢出错误。
+>
+> 更多 `v-model` 用法，详见官方文档：[组件 v-model](https://cn.vuejs.org/guide/components/v-model.html)。

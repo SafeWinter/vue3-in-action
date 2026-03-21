@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "vue": "https://cdn.jsdelivr.net/npm/@vue/runtime-dom@3.5.16/dist/runtime-dom.esm-browser.js",
+    "vue/server-renderer": "https://cdn.jsdelivr.net/npm/@vue/server-renderer@3.5.16/dist/server-renderer.esm-browser.js",
+    "vue-router": "https://unpkg.com/vue-router@5.0.2/dist/vue-router.esm-browser.js",
+    "@vue/devtools-api": "https://unpkg.com/@vue/devtools-api@8.0.6/dist/vue-devtools-api.esm-browser.js"
+  },
+  "scopes": {}
+}

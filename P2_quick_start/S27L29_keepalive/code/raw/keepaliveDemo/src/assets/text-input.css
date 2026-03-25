@@ -1,0 +1,15 @@
+h1 {
+  color: #333;
+}
+input {
+  padding: 10px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+p {
+  font-size: 1.2em;
+}

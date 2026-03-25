@@ -163,3 +163,33 @@ h(Transition, {
 </router-view>
 ```
 
+
+
+## 2 实测备忘
+
+`Timer` 组件中的计时算法值得积累：
+
+```js
+const startTimer = () => {
+  if (!timerRunning.value) {
+    timerRunning.value = true
+    timer = setInterval(() => {
+      milliseconds.value++
+      if (milliseconds.value >= 100) {
+        milliseconds.value = 0
+        seconds.value++
+      }
+    }, 10)
+  }
+}
+```
+
+时间格式化的实现可优化为：
+
+```js
+const fmtDigit = refVal => `${refVal.value}`.padStart(2, '0')
+const formattedTime = computed(() => {
+  return [seconds, milliseconds].map(fmtDigit).join(':')
+})
+```
+

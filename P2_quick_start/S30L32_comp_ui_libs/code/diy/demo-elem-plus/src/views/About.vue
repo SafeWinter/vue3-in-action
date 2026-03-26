@@ -1,5 +1,5 @@
 <template>
-  <div class="about container">
+  <div class="about-container">
     <h1 class="page-header">使用说明</h1>
     <p>通过此系统来熟悉 Vue 以及 Vue Router 的使用</p>
     <p>联系方式</p>
@@ -11,4 +11,8 @@
 
 <script setup></script>
 
-<style scoped></style>
+<style scoped>
+.about-container {
+  margin-inline: 5em;
+}
+</style>

@@ -1,40 +1,41 @@
 <template>
-  <div id="app" class="container">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button
-            type="button"
-            class="navbar-toggle collapsed"
-            data-toggle="collapse"
-            data-target="#navbar"
-            aria-expanded="false"
-            aria-controls="navbar"
-          >
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <div class="navbar-brand">用户管理系统</div>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <router-link to="/home" class="navigation">主页</router-link>
-            <router-link to="/about" class="navigation">关于我们</router-link>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <router-link to="/add" class="navigation">添加用户</router-link>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- 由 vue-router 这个库提供的 -->
-    <!-- 路由所匹配上的组件，会渲染到这个位置 -->
-    <router-view class="content" />
-  </div>
+  <el-container class="container">
+    <el-header>
+      <el-row justify="end">
+        <el-col :span="4">
+          <el-image class="logo" :src="logo" fit="cover"/>
+        </el-col>
+        <el-col :span="20">
+          <el-menu mode="horizontal" @select="changeMenuItem" :default-active="activeMenu">
+            <el-menu-item index="home">
+              <router-link to="/home" class="navigation">主页</router-link>
+            </el-menu-item>
+            <el-menu-item index="about">
+              <router-link to="/about" class="navigation">关于我们</router-link>
+            </el-menu-item>
+            <el-menu-item index="add">
+              <router-link to="/add" class="navigation">添加用户</router-link>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+      </el-row>
+    </el-header>
+    <el-main class="content">
+      <router-view />
+    </el-main>
+  </el-container>
 </template>
 
-<script setup></script>
+<script setup>
+// logo image
+import img from '@/assets/logo.jpg'
+const logo = ref(img)
+
+// toggle menu item
+const activeMenu = ref('home')
+function changeMenuItem(key) {
+  activeMenu.value = key
+}
+</script>
 
 <style scoped></style>

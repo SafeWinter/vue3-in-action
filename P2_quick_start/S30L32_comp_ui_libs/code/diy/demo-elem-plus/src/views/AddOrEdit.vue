@@ -1,86 +1,49 @@
 <template>
-  <div class="container">
+  <div class="edit-container">
     <h1 class="page-header">{{ operation }}用户</h1>
-    <form id="my-form" @submit.prevent="addUser">
-      <div class="well">
-        <div class="form-group">
-          <label>姓名</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="请输入用户姓名"
-            v-model="user.name"
-          />
-        </div>
-        <div class="form-group">
-          <label>年龄</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="请填写用户年龄"
-            v-model.trim="user.age"
-          />
-        </div>
-        <div class="form-group">
-          <label>电话</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="请填写用户电话号码"
-            v-model.trim="user.phone"
-          />
-        </div>
-        <div class="form-group">
-          <label>邮箱</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="请填写用户邮箱地址"
-            v-model.trim="user.email"
-          />
-        </div>
-        <div class="form-group">
-          <label>学历</label>
-          <select class="form-control" v-model="user.education">
-            <option>小学</option>
-            <option>初中或职中</option>
-            <option>高中或职高</option>
-            <option>专科</option>
-            <option>本科</option>
-            <option>硕士</option>
-            <option>博士</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>毕业学校</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="请填写用户毕业院校"
-            v-model.trim="user.graduationschool"
-          />
-        </div>
-        <div class="form-group">
-          <label>职业</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="请填写用户从事的相关职业"
-            v-model.trim="user.profession"
-          />
-        </div>
-        <div class="form-group">
-          <label>个人介绍</label>
-          <textarea
-            class="form-control"
-            rows="10"
-            placeholder="请简单的介绍一下你自己，包括兴趣、爱好等信息..."
-            v-model.trim="user.profile"
-          ></textarea>
-        </div>
-        <button class="btn btn-primary">确认{{ btnLabel }}</button>
-      </div>
-    </form>
+    <el-form
+      class="form"
+      :model="user"
+      id="myForm"
+      @submit.prevent="submitUser"
+      label-width="100px"
+    >
+      <el-form-item label="姓名">
+        <el-input type="text" placeholder="请填写用户姓名" v-model.trim="user.name" />
+      </el-form-item>
+      <el-form-item label="年龄">
+        <el-input type="text" placeholder="请填写用户年龄" v-model.trim="user.age" />
+      </el-form-item>
+      <el-form-item label="电话">
+        <el-input type="text" placeholder="请填写用户电话号码" v-model.trim="user.phone" />
+      </el-form-item>
+      <el-form-item label="邮箱">
+        <el-input type="text" placeholder="请填写用户邮箱地址" v-model.trim="user.email" />
+      </el-form-item>
+      <el-form-item label="学历">
+        <el-select v-model="user.education" placeholder="请选择学历">
+          <el-option label="小学" value="小学" />
+          <el-option label="初中或职中" value="初中或职中" />
+          <el-option label="高中或职高" value="高中或职高" />
+          <el-option label="专科" value="专科" />
+          <el-option label="本科" value="本科" />
+          <el-option label="硕士" value="硕士" />
+          <el-option label="博士" value="博士" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="毕业学校">
+        <el-input type="text" placeholder="请填写用户毕业院校" v-model.trim="user.graduationschool" />
+      </el-form-item>
+      <el-form-item label="职业">
+        <el-input type="text" placeholder="请填写用户从事的相关职业" v-model.trim="user.profession" />
+      </el-form-item>
+      <el-form-item label="个人简介">
+        <el-input type="textarea" :rows="10" placeholder="请简单的介绍一下你自己，包括兴趣、爱好等信息..." v-model.trim="user.profile" />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" native-type="submit">确认{{ btnLabel }}</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -116,7 +79,7 @@ onMounted(() => {
   }
 })
 
-function addUser() {
+function submitUser() {
   // form validation
   for(const key in user.value) {
     if(!user.value[key]) {
@@ -153,4 +116,8 @@ function addUser() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.edit-container {
+  margin-inline: 5em;
+}
+</style>

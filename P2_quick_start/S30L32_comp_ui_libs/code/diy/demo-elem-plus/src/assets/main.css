@@ -1,5 +1,5 @@
 .content {
-  margin-top: 100px;
+  margin-top: 20px;
 }
 
 a {
@@ -44,4 +44,21 @@ label::after {
 
 button + button {
   margin-left: 10px;
+}
+
+.logo {
+  height: 60px;
+  width: 100%;
+  background: no-repeat center;
+  background-size: 90%;
+}
+
+.container {
+  width: 1200px;
+  padding-top: 20px;
+  margin: 0 auto;
+}
+
+.el-menu--horizontal > .el-menu-item:nth-child(2) {
+  margin-right: 60%;
 }

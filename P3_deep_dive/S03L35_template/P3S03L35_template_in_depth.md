@@ -109,6 +109,10 @@ export default {
 }
 ```
 
+实测效果：
+
+![](../../assets/35.4.png)
+
 注意：
 
 - `Vue2` 版实现中，获取 `prop` 属性值须使用 `this`；
@@ -377,7 +381,7 @@ function compile(template){
         template: "#user-card-template",
       };
 
-      createApp({
+      const App = {
         components: {
           UserCard,
         },
@@ -388,11 +392,16 @@ function compile(template){
             avatarUrl: "./yinshi.jpg",
           };
         },
-      }).mount("#app");
+      };
+      createApp(App).mount("#app");
     </script>
   </body>
 </html>
 ```
+
+实测效果：
+
+![](../../assets/35.3.png)
 
 上述示例涉及模板代码及模板的编译，此时的模板编译就是在 **运行时** 进行的。
 
@@ -422,6 +431,10 @@ export default {
 之后就可以在 http://localhost:5173/__inspect/ 里面看到每一个组件编译后的结果。
 
 实测效果：
+
+![](../../assets/35.5.png)
+
+各模块编译情况：
 
 ![](../../assets/35.2.png)
 

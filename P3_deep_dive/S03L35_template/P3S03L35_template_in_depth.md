@@ -12,15 +12,15 @@
 
 ## 1 渲染函数
 
-渲染函数（ h ）调用后会返回虚拟 DOM 节点
+渲染函数（`h`）调用后会返回虚拟 `DOM` 节点。
 
-文档地址：https://cn.vuejs.org/api/render-function.html#h
+详见文档：https://cn.vuejs.org/api/render-function.html#h
 
-实际上，Vue 里面的单文件组件是会被一个 **模板编译器** 进行编译的，编译后的结果并不存在什么模板，而是会把模板编译为渲染函数的形式。
+实际上，`Vue` 里的单文件组件会被一个 **模板编译器** 编译；编译后的结果并不存在什么模板，而是会把模板编译为 **渲染函数** 的形式。
 
-这意味着我们完全可以使用纯 JS 来书写组件，文件的内部直接调用渲染函数来描述你的组件视图。
+这意味着我们完全可以使用纯 `JS` 来书写组件，文件的内部直接调用渲染函数来描述组件视图。
 
-例如我们之前写过的 UserCard 这个组件，完全可以改写成纯 JS 的形式：
+以 `P2S19L21` 课的 `UserCard` 组件为例，完全按纯 `JS` 形式改写如下：
 
 ```js
 import { defineComponent, h } from 'vue'
@@ -35,29 +35,21 @@ export default defineComponent({
   setup(props) {
     // 下面我们使用了渲染函数的形式来描述了原本在模板中所描述的视图结构
     return () =>
-      h(
-        'div',
-        {
-          class: styles.userCard
-        },
-        [
-          h('img', {
-            class: styles.avatar,
-            src: props.avatarUrl,
-            alt: 'User avatar'
-          }),
-          h(
-            'div',
-            {
-              class: styles.userInfo
-            },
-            [h('h2', props.name), h('p', props.email)]
-          )
-        ]
-      )
+      h('div', { class: styles.userCard }, [
+        h('img', {
+          class: styles.avatar,
+          src: props.avatarUrl,
+          alt: 'User avatar'
+        }),
+        h('div', { class: styles.userInfo }, [
+          h('h2', props.name), h('p', props.email)
+        ])
+      ])
   }
 })
 ```
+
+对应的 `CSS` 样式如下（按 `CSS` 模块构建，样式类需改为 **驼峰式命名**）：
 
 ```css
 .userCard {
@@ -90,7 +82,7 @@ export default defineComponent({
 }
 ```
 
-甚至也可以使用 Vue2 经典的 options API 的语法来写：
+甚至也可以使用 `Vue 2` 经典的 `Options API` 语法来改写：
 
 ```js
 import styles from './UserCard.module.css'
@@ -103,41 +95,36 @@ export default {
     avatarUrl: String
   },
   render() {
-    return h(
-      'div',
-      {
-        class: styles.userCard
-      },
-      [
-        h('img', {
-          class: styles.avatar,
-          src: this.avatarUrl,
-          alt: 'User avatar'
-        }),
-        h(
-          'div',
-          {
-            class: styles.userInfo
-          },
-          [h('h2', this.name), h('p', this.email)]
-        )
-      ]
-    )
+    return h('div', { class: styles.userCard }, [
+      h('img', {
+        class: styles.avatar,
+        src: this.avatarUrl,
+        alt: 'User avatar'
+      }),
+      h('div', { class: styles.userInfo }, [
+        h('h2', this.name), h('p', this.email)
+      ])
+    ])
   }
 }
 ```
 
-至此我们就知道了，Vue 里面之所以提供模板的方式，是为了让开发者在描述视图的时候，更加的轻松。Vue 在运行的时候本身是不需要什么模板的，它只需要渲染函数，调用这些渲染函数后所得到的虚拟 DOM.
+注意：
 
-作为一个框架的设计者，你必须要思考：你是框架少做一些，让用户的心智负担更重一些，还是说你的框架多做一些，让用户的心智负担更少一些。
+- `Vue2` 版实现中，获取 `prop` 属性值须使用 `this`；
+- 上述代码中的渲染函数 `h` 原本是以回调函数的参数形式传入 `Vue2` 的渲染函数的；这里使用的是 `Vue3`，因此 `h` 只能从 `'vue'` 中导入。
+
+可见，`Vue` 之所以提供模板的方式，是为了让开发者在描述视图时更加轻松。`Vue` 在运行时本身是不需要什么模板的，它只需要 **渲染函数**，以及调用这些渲染函数后所得到的 **虚拟 DOM**。
+
+作为一个框架的设计者，必须思考：**是要框架少做一些，让用户的心智负担更重一些；还是要框架多做一些，让用户的心智负担更少一些。**
 
 
 
 ## 2 模板的编译
 
-**单文件组件中所书写的模板，对于模板编译器来讲，就是普通的字符串。**
+`SFC` 中所书写的模板对于模板编译器来讲，**就是普通的字符串**。
 
-模板内容：
+例如模板内容：
 
 ```vue
 <template>
@@ -147,13 +134,13 @@ export default {
 </template>
 ```
 
-对于模板编译器来讲，仅仅是一串字符串：
+对于模板编译器而言，上述内容仅仅是一串字符串：
 
 ```js
 '<template><div><h1 :id="someId">Hello</h1></div></template>'
 ```
 
-模板编译器需要对上面的字符串进行操作，最终生成的结果：
+模板编译器需要对上述字符串进行操作，最终生成的结果如下：
 
 ```js
 function render(){
@@ -163,17 +150,17 @@ function render(){
 }
 ```
 
-模板编译器在对模板字符串进行编译的时候，是一点一点转换而来的，整个过程：
+模板编译器在编译模板字符串时，是一点一点转换而来的，整个过程如下：
 
-![image-20231113095532166](https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2023-11-13-015532.png)
+![image-20231113095532166](../../assets/35.1.png)
 
-- 解析器：负责将模板字符串解析为对应的模板AST
-- 转换器：负责将模板AST转换为 JS AST
-- 生成器：将 JS AST 生成最终的渲染函数
+- 解析器：负责将模板字符串解析为对应的模板 `AST`；
+- 转换器：负责将模板 `AST` 转换为 `JS AST`；
+- 生成器：将 `JS AST` 生成最终的渲染函数。
 
 每一个部件都依赖于上一个部件的执行结果。
 
-假设有这么一段模板：
+示例：假设有如下模板：
 
 ```vue
 <div>
@@ -182,13 +169,13 @@ function render(){
 </div>
 ```
 
-对于模板编译器来讲，就是一段字符串：
+这对于模板编译器而言就是一段字符串：
 
 ```js
 "<div><p>Vue</p><p>React</p></div>"
 ```
 
-首先是解析器，拿到这串字符串，对这个字符串进行解析，得到一个一个的 token.
+解析器首先对该字符串进行解析（利用编译原理中的 **有限状态机** 机制），得到一个一个 `token`，大致结构如下：
 
 ```js
 [
@@ -203,9 +190,9 @@ function render(){
 ]
 ```
 
-接下来解析器还需要根据所得到的 token 来生成抽象语法树（模板的AST）
+此外，解析器还需要根据所得到的 `token` 来生成抽象语法树（即模板 `AST`）
 
-转换出来的 AST：
+转换后的模板 `AST` 如下：
 
 ```js
 {
@@ -241,11 +228,9 @@ function render(){
 }
 ```
 
-至此解析器的工作就完成了。
+至此，解析器工作完毕。
 
-
-
-接下来就是转换器登场，它需要将上一步得到的模板 AST 转换为 JS AST：
+接着转换器登场，它将上一步得到的模板 `AST` 转换为 `JS AST`：
 
 ```js
 {
@@ -289,17 +274,15 @@ function render(){
 }
 ```
 
-
-
-最后就是生成器，根据上一步所得到的 JS AST，生成具体的 JS 代码：
+最后，**生成器** 根据上一步得到的 `JS AST`，生成具体的 `JS` 代码：
 
 ```js
 function render () {
-	return h('div', [h('p', 'Vue'), h('p', 'React')])
+  return h('div', [h('p', 'Vue'), h('p', 'React')])
 }
 ```
 
-下面是一个模板编译器大致的结构：
+下面是一个模板编译器大致的工作流程：
 
 ```js
 function compile(template){
@@ -308,7 +291,7 @@ function compile(template){
   // 2. 转换器：将模板 AST 转换为 JS AST
   transform(ast)
   // 3. 生成器
-  const code = genrate(ast)
+  const code = generate(ast)
   
   return code;
 }
@@ -318,16 +301,16 @@ function compile(template){
 
 ## 3 编译的时机
 
-整体来讲会有两种情况：
+整体上分两种情况：
 
-1. 运行时编译
-2. 预编译
+1. 运行时编译；
+2. 预编译；
 
 
 
-**1. 运行时编译**
+### 3.1 运行时编译
 
-例如下面的代码，是直接通过 CDN 的方式引入的 Vue
+以下示例代码直接通过 `CDN` 的方式引入 `Vue`：
 
 ```html
 <!DOCTYPE html>
@@ -411,19 +394,19 @@ function compile(template){
 </html>
 ```
 
-在上面的例子中，也会涉及到模板代码以及模板的编译，那么此时的模板编译就是在运行时进行的。
+上述示例涉及模板代码及模板的编译，此时的模板编译就是在 **运行时** 进行的。
 
 
 
-**2. 预编译**
+### 3.2 预编译
 
-预编译是发生在工程化环境下面。
+预编译发生在工程化环境下。
 
-所谓预编译，指的是工程打包过程中就完成了模板的编译工作，浏览器拿到的是打包后的代码，是完全没有模板的。
+所谓预编译，指的是工程打包过程中就完成了模板的编译工作，浏览器拿到的是打包后的代码，是 **完全没有模板** 的。
 
-这里推荐一个插件：vite-plugin-inspect
+这里推荐一个插件：`vite-plugin-inspect`（详见 [NPM 文档](https://www.npmjs.com/package/vite-plugin-inspect)）
 
-安装该插件后在 vite.config.js 配置文件中简单配置一下：
+安装该插件后在 `vite.config.js` 配置文件中简单配置一下：
 
 ```js
 // vite.config.js
@@ -437,6 +420,10 @@ export default {
 ```
 
 之后就可以在 http://localhost:5173/__inspect/ 里面看到每一个组件编译后的结果。
+
+实测效果：
+
+![](../../assets/35.2.png)
 
 ---
 

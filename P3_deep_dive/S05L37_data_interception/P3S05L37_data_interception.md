@@ -383,6 +383,46 @@ function deepProxy(obj) {
 
 如果需要全面拦截对象的各种操作，那么 `Proxy` 能提供更强大和灵活的拦截能力，尽管可能有一些轻微的性能开销。
 
----
 
--EOF-
+
+> [!tip]
+>
+> **DIY 拓展**：`DeepSeek` 对 `Object.defineProperty` 版深度拦截的改进：
+>
+> 完整代码如下：
+>
+> ```js
+> function deepDefineProperty(obj, visited = new WeakSet()) {
+>   if (typeof obj !== "object" || obj === null || visited.has(obj)) return;
+>   visited.add(obj);
+> 
+>   Object.keys(obj).forEach(key => {
+>     const value = obj[key];
+>     if (typeof value === "object" && value !== null) {
+>       deepDefineProperty(value, visited);
+>     }
+>     let _value = value;
+>     Object.defineProperty(obj, key, {
+>       get() {
+>         console.log(`读取${key}属性`);
+>         return _value;
+>       },
+>       set(newVal) {
+>         console.log(`设置${key}属性`);
+>         _value = newVal;
+>         if (typeof newVal === "object" && newVal !== null && !visited.has(newVal)) {
+>           deepDefineProperty(newVal, visited);
+>         }
+>       },
+>       configurable: true,
+>       enumerable: true,
+>     });
+>   });
+> }
+> ```
+>
+> 重构原因如下：
+>
+> 1. **重复处理**：如果对象存在循环引用，`deepDefineProperty` 会无限递归。代码未处理这种情况。
+> 2. **原型链污染**：`for...in` 会遍历原型链上的可枚举属性，虽用 `hasOwnProperty` 过滤，但若对象原型上有可枚举属性且为对象类型，也会被处理（可能不是预期）。
+> 3. **setter 新值未递归**：当通过 `setter` 将属性设置为新对象时，新对象内部的属性不会自动获得访问器。这是设计取舍，不是 `bug`。

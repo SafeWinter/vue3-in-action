@@ -4,15 +4,19 @@
 
 
 
-什么是响应式数据？其实就是**被拦截的对象**。
+## 1 概念剖析
 
-当对象被拦截后，针对对象的各种操作也就能够被拦截下来，从而让我们有机会做一些额外的事情。因此只要是被拦截了对象，就可以看作是一个响应式数据。
+响应式数据的实质，就是 **被拦截的对象**。
 
-在 Vue3 中，创建响应式数据的方式，有 **ref** 和 **reactive** 两种，**这两个 API 的背后，就是就是针对对象添加拦截**。
+当对象被拦截后，针对对象的各种操作也就能够被拦截下来，从而有机会执行一些额外的处理逻辑。
 
-在 JS 中，要实现数据拦截，要么是 Object.defineProperty，要么是 Proxy，而这两者都是针对**对象**来进行操作的。
+因此只要是一个被拦截的对象，就可以视为 **响应式数据**。
 
-ref 以及 reactive 源码：
+在 `Vue3` 中，创建响应式数据的方式，有 **ref** 和 **reactive** 两种，**这两个 API 的背后，就是针对对象添加拦截**。
+
+在 `JS` 中，要实现数据拦截，要么是 `Object.defineProperty`，要么是 `Proxy`，而这两者都是针对 **对象** 来进行操作的。
+
+`ref` 部分源码：
 
 ```js
 class RefImpl<T> {
@@ -50,6 +54,8 @@ const state = ref(5);
 state.value;
 ```
 
+`reactive` 部分源码：
+
 ```js
 function createReactiveObject(
   target: Target,
@@ -82,25 +88,92 @@ export function reactive(target: object) {
 }
 ```
 
-从源码中我们就可以看出，**ref 和 reactive 在实现响应式上面的策略是有所不同**：
+从源码可以看出，**ref 和 reactive 在实现响应式上面的策略是有所不同**：
 
-- ref：使用 Object.defineProperty + Proxy 方式
-- reactive：使用 Proxy 方式
+- `ref`：使用 `Object.defineProperty` + `Proxy` 方式——
+  - 对于原始值，它用的是 **类访问器**（可看作是 `Object.defineProperty` 的现代写法）；
+  - 对于对象，它用的是 **Proxy**。
 
-这节课还有一个非常重要的知识点，就是要 **学会判断某个操作是否会产生拦截**。因为只有产生拦截，才会有后续的依赖收集和派发更新一类的操作。
+- `reactive`：使用 `Proxy` 方式
 
-简单复习上节课的知识，有两个 API 能够实现拦截：
 
-1. Object.defineProperty
-   - 特定的属性的读取
-   - 特定的属性的赋值
-2. 操作 Proxy 代理对象的成员
+
+## 2 习题训练
+
+本节课另一个非常重要的内容，是 **学会判断某个操作是否会产生拦截**。因为只有产生了拦截，才会有后续的 **依赖收集** 和 **派发更新** 等操作。
+
+简单回顾上节课内容，有两个 `API` 能够实施拦截：
+
+1. `Object.defineProperty`
+   - 特定属性的读取
+   - 特定属性的赋值
+2. 操作 `Proxy` 代理对象的成员
    - 读取
    - 赋值
    - 新增
    - 删除
 
 测试题目：
+
+先简化 `ref` 和 `reactive` 实现：
+
+```js
+// 先写一个迷你版的 ref 和 reactive 的实现
+function isObject(val) {
+  return typeof val === "object" && val !== null;
+}
+class RefImpl {
+  constructor(value) {
+    // 简单判断是否是对象
+    this._value = isObject(value) ? reactive(value) : value;
+  }
+  get value() {
+    console.log("拦截到了 value 属性的 get 操作");
+    return this._value;
+  }
+  set value(newValue) {
+    console.log("拦截到了 value 属性的 set 操作");
+    this._value = newValue;
+  }
+}
+function ref(val) {
+  return new RefImpl(val);
+}
+
+/**
+ * 做深层代理处理
+ * @param {*} obj
+ */
+function deepProxy(obj) {
+  return new Proxy(obj, {
+    get(target, key) {
+      console.log(`拦截到了${key}属性的get操作`);
+      if (isObject(target[key])) {
+        // 说明是对象，需要递归代理
+        return deepProxy(target[key]);
+      }
+      return target[key];
+    },
+    set(target, key, value) {
+      console.log(`拦截到了${key}属性的set操作`);
+      target[key] = value;
+      return true;
+    },
+    deleteProperty(target, key) {
+      console.log(`拦截到了${key}属性的delete操作`);
+      delete target[key];
+      return true;
+    },
+  });
+}
+
+function reactive(obj) {
+  // 进行一个代理
+  return deepProxy(obj);
+}
+```
+
+然后执行下列题目：
 
 ```js
 // demo1
@@ -170,7 +243,7 @@ arr[0] = 3; // 会拦截，拦截 0 的 set 操作
 arr.push(4); // 会被拦截
 ```
 
-再次强调，**一定要学会去判断针对一个对象进行操作的时候，是否会发生拦截，这一点非常重要**‼️
+再次强调，**一定要学会判断某个对象在进行操作时是否会发生拦截，这一点非常重要**‼️
 
 ---
 

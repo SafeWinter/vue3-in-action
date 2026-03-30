@@ -175,6 +175,8 @@ function reactive(obj) {
 
 然后执行下列题目：
 
+示例一：基本类型
+
 ```js
 // demo1
 let state = ref(1);
@@ -187,6 +189,12 @@ state.value = 3; // 会拦截
 delete state.value; // 不会拦截
 state = 3; // 不会拦截
 ```
+
+实测结果：
+
+![](../../assets/38.1.png)
+
+示例二：普通对象
 
 ```js
 // demo2
@@ -203,6 +211,12 @@ state.value = 3; // 会拦截，value 的 set 操作
 delete state.value; // 不会拦截
 state = 3; // 不会拦截
 ```
+
+实测结果：
+
+![](../../assets/38.2.png)
+
+示例三：空对象
 
 ```js
 // demo3
@@ -221,6 +235,12 @@ console.log(state.a.b.c); // 会拦截
 delete state.a.b; // 会拦截 a 是 get 操作，b 是 delete 操作
 ```
 
+实测结果：
+
+![](../../assets/38.3.png)
+
+示例四：
+
 ```js
 // demo4
 const state = ref({ a: 1 });
@@ -233,6 +253,12 @@ console.log("-------------");
 console.log(n); 
 ```
 
+实测结果：
+
+![](../../assets/38.4.png)
+
+示例五：数组的响应式
+
 ```js
 // demo5
 const arr = reactive([1, 2, 3]);
@@ -242,6 +268,10 @@ arr[0]; // 会拦截，拦截 0 的 get 操作
 arr[0] = 3; // 会拦截，拦截 0 的 set 操作
 arr.push(4); // 会被拦截
 ```
+
+实测结果：
+
+![](../../assets/38.5.png)
 
 再次强调，**一定要学会判断某个对象在进行操作时是否会发生拦截，这一点非常重要**‼️
 

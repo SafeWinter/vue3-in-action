@@ -1,0 +1,16 @@
+{
+  "name": "reactive",
+  "version": "1.0.0",
+  "description": "DIY implementation of Vue reactive system",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "DIY",
+    "reactive"
+  ],
+  "author": "PeacefulWinter",
+  "license": "MIT"
+}

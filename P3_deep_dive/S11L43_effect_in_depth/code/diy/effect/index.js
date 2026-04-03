@@ -1,5 +1,6 @@
 let activeEffect = null; // 记录当前的函数
 const depsMap = new Map(); // 保存依赖关系
+const effectStack = []; // 保存函数栈
 
 function track(target, key) {
   // 建立依赖关系
@@ -59,25 +60,21 @@ const state = new Proxy(data, {
 function effect(fn) {
   const environment = () => {
     cleanup(environment); // 在运行副作用函数之前先进行清理，避免重复收集依赖
+    effectStack.push(environment);
     activeEffect = environment;
     fn();
-    activeEffect = null;
+    effectStack.pop();
+    activeEffect = effectStack[effectStack.length - 1];
   };
   environment.deps = []; // 用来存储当前环境函数的依赖
   environment();
 }
 
 effect(() => {
-  if (state.a === 1) {
-    state.b;
-  } else {
-    state.c;
-  }
+  effect(() => {
+    state.a;
+    console.log("执行了函数2");
+  });
+  state.b;
   console.log("执行了函数1");
 });
-effect(() => {
-  console.log(state.a);
-  console.log(state.c);
-  console.log("执行了函数2");
-});
-state.a = 2;

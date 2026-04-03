@@ -13,9 +13,4 @@ const obj = window.obj = {
 
 const state = window.state = reactive(obj);
 
-const fn = () => {
-  console.log('running fn');
-  state.a = state.a + 1;
-}
-
-effect(fn);
+window.effect = effect;

@@ -630,7 +630,7 @@ function effect(fn) {
 
 ## 6 实测备忘
 
-实测时与 `Vue3` 中的 `effect` 函数的源码对比，发现课件是源码逻辑的简化版本（变量名都保持一致）。查看位置：`node_modules\@vue\reactivity\dist\reactivity.cjs.js`
+:one: 实测时与 `Vue3` 中的 `effect` 函数的源码对比，发现课件是源码逻辑的简化版本（变量名都保持一致）。查看位置：`node_modules\@vue\reactivity\dist\reactivity.cjs.js`
 
 节选（`L450`）：
 
@@ -656,6 +656,12 @@ function effect(fn, options) {
 ```
 
 
+
+:two: 在 `DIY` 首版实现中，曾将 `activeEnv`（即 `activeEffect`）传入 `track()` 函数，以此减少一层作用域链检索。`track()` 函数的完整作用域链如下图所示：
+
+![](../../assets/43.11.png)
+
+具体代码详见 `code/diy/effect/index1.js`。
 
 ---
 

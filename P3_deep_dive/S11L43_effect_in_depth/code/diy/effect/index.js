@@ -10,7 +10,7 @@ function track(target, key) {
 
   // 将依赖的函数添加到集合里面
   deps.add(activeEffect);
-  activeEffect.deps.push(deps); // activeEffect 和 deps 是多对多的关系
+  activeEffect.deps.push({key, depSet: deps}); // activeEffect 和 deps 是多对多的关系
   console.log(depsMap);
 }
 
@@ -23,14 +23,10 @@ function trigger(target, key) {
 function cleanup(environment) {
   let deps = environment.deps; // 拿到当前环境函数的依赖（是个数组）
   if (deps.length) {
-    deps.forEach((dep) => {
-      dep.delete(environment);
-      if (dep.size === 0) {
-        for (let [key, value] of depsMap) {
-          if (value === dep) {
-            depsMap.delete(key);
-          }
-        }
+    deps.forEach(({key, depSet}) => {
+      depSet.delete(environment);
+      if (depSet.size === 0) { 
+        depsMap.delete(key);
       }
     });
     deps.length = 0;

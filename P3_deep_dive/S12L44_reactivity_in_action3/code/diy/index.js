@@ -14,3 +14,24 @@ const obj = window.obj = {
 const state = window.state = reactive(obj);
 
 window.effect = effect;
+
+/* 控制台测试内容：
+effect(() => {
+  if (state.a === 1) {
+    state.b;
+  } else {
+    state.c;
+  }
+  console.log("执行了函数");
+});
+state.a = 10
+----控制台运行结果----
+收集器：代理对象 a 属性的 get 操作被拦截
+收集器：代理对象 b 属性的 get 操作被拦截
+执行了函数
+触发器：代理对象 a 属性的 set 操作被拦截
+收集器：代理对象 a 属性的 get 操作被拦截
+收集器：代理对象 c 属性的 get 操作被拦截
+执行了函数
+<- 10
+*/

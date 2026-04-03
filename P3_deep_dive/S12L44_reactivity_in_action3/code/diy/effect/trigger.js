@@ -53,12 +53,12 @@ export function trigger(target, type, key) {
   // console.log('触发器：原始对象为', target);
   console.log(`触发器：代理对象 ${key} 属性的 ${type} 操作被拦截`);
 
-  const effects = collectEffects(target, type, key);
+  const effects = collectEffects(target, type, key); // Set<effect>
   if(!effects) {
     return;
   }
 
-  effects
+  Array.from(effects)
     .filter(e => e !== activeEffect)
     .forEach(effect => effect());
 }

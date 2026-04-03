@@ -17,8 +17,8 @@ window.effect = effect;
 
 /* 控制台测试内容：
 function fn() {
-  console.log("fn");
   state.a = state.a + 1;
+  console.log("执行了 fn");
 }
 let isRun = false;
 const effectFn = effect(fn, {
@@ -33,10 +33,20 @@ const effectFn = effect(fn, {
 });
 effectFn(); // 只有在执行了这个函数之后，才会建立依赖关系
 state.a++;
+
 ----控制台运行结果----
-fn
+
 收集器：代理对象 a 属性的 get 操作被拦截
 触发器：代理对象 a 属性的 set 操作被拦截
+执行了 fn
 收集器：代理对象 a 属性的 get 操作被拦截
-Uncaught TypeError: Cannot read properties of undefined (reading 'deps')
+track.js:25 未通过 trigger 触发读取拦截，不收集依赖
+触发器：代理对象 a 属性的 set 操作被拦截
+通过 scheduler 触发依赖
+<- 2
+(1 秒后)
+1 秒后通过 scheduler 自主控制依赖函数的执行：
+收集器：代理对象 a 属性的 get 操作被拦截
+触发器：代理对象 a 属性的 set 操作被拦截
+执行了 fn
 */

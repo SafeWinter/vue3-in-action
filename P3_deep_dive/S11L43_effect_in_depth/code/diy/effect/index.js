@@ -10,6 +10,7 @@ function track(target, key) {
 
   // 将依赖的函数添加到集合里面
   deps.add(activeEffect);
+  activeEffect.deps.push(deps); // activeEffect 和 deps 是多对多的关系
   console.log(depsMap);
 }
 
@@ -17,6 +18,23 @@ function trigger(target, key) {
   // 这里面就需要运行依赖的函数
   const deps = depsMap.get(key);
   deps && deps.forEach((effect) => effect());
+}
+
+function cleanup(environment) {
+  let deps = environment.deps; // 拿到当前环境函数的依赖（是个数组）
+  if (deps.length) {
+    deps.forEach((dep) => {
+      dep.delete(environment);
+      if (dep.size === 0) {
+        for (let [key, value] of depsMap) {
+          if (value === dep) {
+            depsMap.delete(key);
+          }
+        }
+      }
+    });
+    deps.length = 0;
+  }
 }
 
 // 原始对象
@@ -44,10 +62,12 @@ const state = new Proxy(data, {
  */
 function effect(fn) {
   const environment = () => {
+    cleanup(environment); // 在运行副作用函数之前先进行清理，避免重复收集依赖
     activeEffect = environment;
     fn();
     activeEffect = null;
   };
+  environment.deps = []; // 用来存储当前环境函数的依赖
   environment();
 }
 

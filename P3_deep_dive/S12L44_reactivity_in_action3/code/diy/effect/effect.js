@@ -4,7 +4,13 @@ export const targetMap = new WeakMap();
 
 export const effectStack = [];
 
-export default function effect(fn) {
+const defaults = {
+  lazy: false,
+  schedular: null
+}
+
+export default function effect(fn, options) {
+  options = Object.assign({}, defaults, options);
   const env = () => {
     try {
       cleanup(env);
@@ -17,7 +23,10 @@ export default function effect(fn) {
     }
   };
   env.deps = [];
-  env();
+  if(!options.lazy) {
+    env(); 
+  }
+  return env;
 }
 
 function cleanup(env) {

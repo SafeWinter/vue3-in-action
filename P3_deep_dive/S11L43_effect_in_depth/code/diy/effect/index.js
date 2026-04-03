@@ -73,6 +73,10 @@ effect(() => {
   } else {
     state.c;
   }
-  console.log("执行了函数");
+  console.log("执行了函数1");
 });
-state.a = 10;
+effect(() => {
+  console.log(state.c);
+  console.log("执行了函数2");
+});
+state.a = 2;

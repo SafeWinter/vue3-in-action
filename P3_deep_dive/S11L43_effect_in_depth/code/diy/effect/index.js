@@ -17,7 +17,7 @@ function track(target, key) {
 function trigger(target, key) {
   // 这里面就需要运行依赖的函数
   const deps = depsMap.get(key);
-  deps && deps.forEach((effect) => effect());
+  deps && new Set(deps).forEach((effect) => effect());
 }
 
 function cleanup(environment) {
@@ -76,6 +76,7 @@ effect(() => {
   console.log("执行了函数1");
 });
 effect(() => {
+  console.log(state.a);
   console.log(state.c);
   console.log("执行了函数2");
 });

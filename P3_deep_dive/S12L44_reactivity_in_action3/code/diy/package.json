@@ -12,5 +12,8 @@
     "reactive"
   ],
   "author": "PeacefulWinter",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^3.5.32"
+  }
 }

@@ -6,7 +6,7 @@ export const effectStack = [];
 
 const defaults = {
   lazy: false,
-  schedular: null
+  scheduler: null
 }
 
 export default function effect(fn, options) {
@@ -23,6 +23,7 @@ export default function effect(fn, options) {
     }
   };
   env.deps = [];
+  env.options = options;
   if(!options.lazy) {
     env(); 
   }

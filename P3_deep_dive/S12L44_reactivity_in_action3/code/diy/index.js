@@ -15,43 +15,28 @@ const state = window.state = reactive(obj);
 
 window.effect = effect;
 
-/* 控制台测试内容1：
-const eff = effect(() => {
-  if (state.a === 1) {
-    state.b;
-  } else {
-    state.c;
-  }
-  console.log("执行了函数");
-}, {lazy: true});
-eff();
-state.a = 10
+/* 控制台测试内容：
+function fn() {
+  console.log("fn");
+  state.a = state.a + 1;
+}
+let isRun = false;
+const effectFn = effect(fn, {
+  lazy: true,
+  scheduler: (eff) => {
+    // 由我用户来决定如何处理依赖的函数
+    setTimeout(() => {
+      console.log('1 秒后通过 scheduler 自主控制依赖函数的执行：');
+      eff();
+    }, 1000);
+  },
+});
+effectFn(); // 只有在执行了这个函数之后，才会建立依赖关系
+state.a++;
 ----控制台运行结果----
+fn
 收集器：代理对象 a 属性的 get 操作被拦截
-收集器：代理对象 b 属性的 get 操作被拦截
-执行了函数
 触发器：代理对象 a 属性的 set 操作被拦截
 收集器：代理对象 a 属性的 get 操作被拦截
-收集器：代理对象 c 属性的 get 操作被拦截
-执行了函数
-<- 10
-*/
-
-/* 控制台测试内容2：
-const eff = effect(() => {
-  if (state.a === 1) {
-    state.b;
-  } else {
-    state.c;
-  }
-  console.log("执行了函数");
-}, {lazy: true});
-state.a = 10
-eff()
-----控制台运行结果----
-触发器：代理对象 a 属性的 set 操作被拦截
-收集器：代理对象 a 属性的 get 操作被拦截
-收集器：代理对象 c 属性的 get 操作被拦截
-执行了函数
-<- undefined
+Uncaught TypeError: Cannot read properties of undefined (reading 'deps')
 */

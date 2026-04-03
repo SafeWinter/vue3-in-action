@@ -60,5 +60,12 @@ export function trigger(target, type, key) {
 
   Array.from(effects)
     .filter(e => e !== activeEffect)
-    .forEach(effect => effect());
+    .forEach(effect => {
+      if(effect.options && effect.options.scheduler) {
+        console.log('通过 scheduler 触发依赖');
+        effect.options.scheduler(effect);
+      } else {
+        effect()
+      }
+    });
 }

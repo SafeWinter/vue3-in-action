@@ -32,6 +32,8 @@ export function computed(getterOrOptions) {
     scheduler(depFn) {
       // depFn(); // 此时无须立即执行依赖函数（即 getter）
       dirty = true;  // 等到下次读取 value 属性再执行
+      console.log('depFn === getter1:', depFn === getter1)
+      // trigger(getter1, TriggerOperation.SET, 'value'); // 通过 trigger 触发依赖，通知计算属性更新
       trigger(depFn, TriggerOperation.SET, 'value'); // 通过 trigger 触发依赖，通知计算属性更新
     }
   })

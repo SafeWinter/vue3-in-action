@@ -1,4 +1,7 @@
 import effect from "./effect/effect.js";
+import { track } from "./effect/track.js";
+import { trigger } from "./effect/trigger.js";
+import { TrackOperation, TriggerOperation } from "./utils.js";
 
 function normalizeParam(getterOrOptions) {
   let getter, setter;
@@ -29,10 +32,12 @@ export function computed(getterOrOptions) {
     scheduler(depFn) {
       // depFn(); // 此时无须立即执行依赖函数（即 getter）
       dirty = true;  // 等到下次读取 value 属性再执行
+      trigger(depFn, TriggerOperation.SET, 'value'); // 通过 trigger 触发依赖，通知计算属性更新
     }
   })
   return {
     get value() {
+      track(getter1, TrackOperation.GET, 'value'); // 读取 value 属性时建立依赖关系
       if(dirty) {
         cache = getter1();
         dirty = false;

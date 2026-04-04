@@ -51,7 +51,7 @@ function collectEffects(target, type, key) {
  */
 export function trigger(target, type, key) {
   // console.log('触发器：原始对象为', target);
-  console.log(`触发器：代理对象 ${key} 属性的 ${type} 操作被拦截`);
+  // console.log(`触发器：代理对象 ${key} 属性的 ${type} 操作被拦截`);
 
   const effects = collectEffects(target, type, key); // Set<effect>
   if(!effects) {
@@ -61,7 +61,7 @@ export function trigger(target, type, key) {
   Array.from(effects)
     .filter(e => e !== activeEffect)
     .forEach(effect => {
-      if(effect.options && effect.options.scheduler) {
+      if(effect.options && typeof effect.options.scheduler === 'function') {
         console.log('通过 scheduler 触发依赖');
         effect.options.scheduler(effect);
       } else {

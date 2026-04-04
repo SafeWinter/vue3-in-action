@@ -22,17 +22,21 @@ const sum = computed(() => {
 })
 console.log(sum.value)
 console.log(sum.value)
+console.log(sum.value)
+console.log('-------------')
+state.a = 2
+console.log(sum.value)
+console.log(sum.value)
+console.log(sum.value)
 ----控制台运行结果----
 执行了 sum 计算
-收集器：代理对象 a 属性的 get 操作被拦截
-未通过 trigger 触发读取拦截，不收集依赖
-收集器：代理对象 b 属性的 get 操作被拦截
-未通过 trigger 触发读取拦截，不收集依赖
 3
+3
+3
+-------------
+通过 scheduler 触发依赖
 执行了 sum 计算
-收集器：代理对象 a 属性的 get 操作被拦截
-未通过 trigger 触发读取拦截，不收集依赖
-收集器：代理对象 b 属性的 get 操作被拦截
-未通过 trigger 触发读取拦截，不收集依赖
-3
+4
+4
+4
 */

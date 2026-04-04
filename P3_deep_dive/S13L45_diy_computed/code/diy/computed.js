@@ -1,3 +1,5 @@
+import effect from "./effect/effect.js";
+
 function normalizeParam(getterOrOptions) {
   let getter, setter;
 
@@ -20,9 +22,22 @@ function normalizeParam(getterOrOptions) {
 
 export function computed(getterOrOptions) {
   const { getter, setter } = normalizeParam(getterOrOptions);
+  let cache, dirty = true;
+  // 将 getter 传入 effect，getter 里面的响应式属性就会和 getter 建立依赖关系
+  const getter1 = effect(getter, {
+    lazy: true,
+    scheduler(depFn) {
+      // depFn(); // 此时无须立即执行依赖函数（即 getter）
+      dirty = true;  // 等到下次读取 value 属性再执行
+    }
+  })
   return {
     get value() {
-      return getter();
+      if(dirty) {
+        cache = getter1();
+        dirty = false;
+      }
+      return cache;
     },
     set value(newValue) {
       return setter(newValue);

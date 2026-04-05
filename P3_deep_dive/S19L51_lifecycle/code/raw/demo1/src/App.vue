@@ -1,0 +1,41 @@
+<template>
+  <div id="app">
+    <button @click="isShow = !isShow">
+      {{ isShow ? '隐藏' : '显示' }}
+    </button>
+    <Counter v-if="isShow" />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import Counter from '@/components/Counter.vue'
+const isShow = ref(true)
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+button {
+  font-size: 16px;
+  color: #fff;
+  background-color: #42b983;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  background-color: #369f75;
+}
+</style>

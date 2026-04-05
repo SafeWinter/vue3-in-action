@@ -166,7 +166,7 @@ watch(isEven, () => {
 
 上例并未清晰定义何为 `getter` 函数。实测时改为如下版本，可清晰辨认两次执行的前后顺序：
 
-```js
+```html
 <template>
   <div>
     <input type="number" v-model="count" />

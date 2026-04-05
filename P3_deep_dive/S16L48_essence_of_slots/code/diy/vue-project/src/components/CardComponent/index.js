@@ -1,20 +1,20 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, ref } from 'vue'
 import styles from './styles.module.css'
 
 function getHeaderVNode(renderFn) {
-  const vnodeFromParent = renderFn()
-  console.log('vnodeFromParent:', vnodeFromParent);
+  const title = ref('这是从子组件传递的标题数据')
+  const slotProps = { title: title.value }
+  const vnodeFromParent = renderFn(slotProps)
+  console.log('vnodeFromParent:', vnodeFromParent)
   return vnodeFromParent.length === 0 ? h('div', null, '默认标题') : vnodeFromParent
 }
 
 export default defineComponent({
   name: 'CardComponent',
   setup(_, { slots }) {
-    console.log('slots:', slots)
     const headerVNode = getHeaderVNode(slots.header)
-    const defaultVNode = slots.default()
     console.log('headerVNode:', headerVNode)
-    console.log('defaultVNode', defaultVNode)
+    const defaultVNode = slots.default()
     return () =>
       h('div', { class: styles.card }, [
         h('div', { class: styles['card-header'] }, headerVNode),

@@ -2,7 +2,8 @@
   <div class="card">
     <div class="card-header">
       <!-- 这就是一个具名插槽 -->
-      <slot name="header">
+      <!-- eslint-disable-next-line vue/valid-v-bind -->
+      <slot name="header" :title>
         <div>默认标题</div>
       </slot>
     </div>
@@ -15,7 +16,10 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+const title = ref('这是从子组件传递的标题数据')
+</script>
 
 <style>
 .card {

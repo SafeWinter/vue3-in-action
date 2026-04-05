@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import CardComponent from '@/components/CardComponent.vue'
-// import CardComponent from '@/components/CardComponent/CardComponent.js'
+// import CardComponent from '@/components/CardComponent.vue'
+import CardComponent from '@/components/CardComponent'
 </script>
 
 <style scoped>

@@ -6,7 +6,7 @@
 
 ## 1 KeepAlive 组件回顾
 
-`keep-alive` 一词借鉴于 `HTTP` 协议。在 `HTTP` 协议中，`KeepAlive` 被称为 **HTTP 持久连接（HTTP persistent connection）**，其作用是允许多个请求或响应共用一个 `TCP` 连接。
+`keep-alive` 一词最初来自 `HTTP` 协议。在 `HTTP` 协议中，`KeepAlive` 被称为 **HTTP 持久连接（HTTP persistent connection）**，其作用是允许多个请求或响应共用一个 `TCP` 连接。
 
 在没有 `KeepAlive` 的情况下，一个 `HTTP` 连接会在每次请求/响应结束后关闭；当下一次请求发生时，会重新建立 `HTTP` 连接。频繁地销毁、创建 `HTTP` 连接会带来额外的性能开销，于是 `KeepAlive` 诞生了。
 
@@ -39,7 +39,7 @@
 此外，`keep-alive` 还可以配置一些属性来控制一些细节：
 
 - `include`：设置要缓存的组件，支持的书写方式有：**字符串、正则表达式、数组**；
-- `exclude`：剔除缓存的组件；
+- `exclude`：剔除缓存的组件，支持的书写方式与 `include` 相同；
 - `max`：设置缓存组件的数量上限。如果缓存的实例数即将超过指定的最大数量，则最早未被访问的缓存实例将被销毁，以便为新的实例腾出空间。
 
 更多用法，详见 `P2S27L29` 课笔记。
@@ -69,3 +69,31 @@
 
 
 
+## 3 实测备忘
+
+:one: 示例一运行情况：
+
+![](../../assets/52.1.png)
+
+此时选项卡的数据来源由 `pinia` 中的 `pageNames` 统一管理。通过包裹 `<keep-alive>` 标签实现标签状态的缓存。
+
+核心代码：
+
+```html
+<router-view v-slot="{ Component }">
+  <keep-alive :include="pageNames">
+    <component :is="Component" />
+  </keep-alive>
+</router-view>
+
+<script setup>
+import { usePageStore } from '@/store/usePageStore'
+const { pageNames, addPage, removePage } = usePageStore()
+</script>
+```
+
+
+
+:two: 示例二实测效果：
+
+![](../../assets/52.2.png)

@@ -1,10 +1,20 @@
 <template>
-  <!-- 组件 A 直接渲染子组件 B -->
-  <B />
+  <div class="a-container">
+    <p v-bind="$attrs">A组件</p>
+  </div>
 </template>
 
 <script setup>
-import B from './B.vue'
-const emits = defineEmits(['click'])
-// console.log(emits);
+defineOptions({
+  inheritAttrs: false
+})
 </script>
+
+<style scoped>
+.a-container {
+  border: 10px solid black;
+}
+p {
+  border: 10px solid grey;
+}
+</style>

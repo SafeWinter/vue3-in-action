@@ -1,6 +1,7 @@
 <template>
   <div class="a-container">
     <p v-bind="$attrs">A组件</p>
+    <p>{{ $attrs.onClick.toString() }}</p>
   </div>
 </template>
 

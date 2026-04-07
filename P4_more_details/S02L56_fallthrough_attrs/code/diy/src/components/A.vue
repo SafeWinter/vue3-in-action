@@ -1,10 +1,8 @@
 <template>
-  <div class="a-container">
-  	<p>A组件</p>
-  </div>
+  <!-- 组件 A 直接渲染子组件 B -->
+  <B />
 </template>
-<style scoped>
-.a-container {
-  color: red;
-}
-</style>
+
+<script setup>
+import B from './B.vue'
+</script>

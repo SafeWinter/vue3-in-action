@@ -5,4 +5,6 @@
 
 <script setup>
 import B from './B.vue'
+const emits = defineEmits(['click'])
+// console.log(emits);
 </script>

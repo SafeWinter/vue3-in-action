@@ -1,5 +1,5 @@
 <template>
-  <A id="a" class="aa" data-test="test" />
+  <A id="outer" data-test="test-outer" />
 </template>
 
 <script setup>

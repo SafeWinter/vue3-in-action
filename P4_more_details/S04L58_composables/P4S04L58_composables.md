@@ -338,6 +338,10 @@ export function useFetch(url) {
 }
 ```
 
+实测效果（使用公共 `API` 接口：https://yesno.wtf/api，完整代码详见 `ce438e0`）：
+
+![](../../assets/58.2.png)
+
 
 
 #### 相关约定和最佳实践

@@ -15,18 +15,17 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import img1 from '@/assets/img1.webp'
+import img2 from '@/assets/img2.webp'
+import img3 from '@/assets/img3.jpg'
+import img4 from '@/assets/img4.webp'
+import img5 from '@/assets/img5.jpg'
 
 // 定义一个图片索引
 const curIndex = ref(0)
 
 // 图片数组
-const images = [
-  'https://10.idqqimg.com/eth/ajNVdqHZLLAJib8odhz8Th2Z4Gat0axooYaxANJlaLEwTomre0hx8Y5yib6FxDZxsgiaYG1W2ETbrU/130?tp=webp',
-  'https://10.idqqimg.com/eth/ajNVdqHZLLDqYf0PtFibF9JNOnRbAw7DicWPicmfRkQwPeK2mnZ7ZJzZFdsCwCWdcwhEqoVphXiaDHE/130?tp=webp',
-  'https://thirdqq.qlogo.cn/g?b=sdk&k=LaERpMuX1ZjWTQmhrhst6Q&s=100&t=0&tp=webp',
-  'https://10.idqqimg.com/eth/ajNVdqHZLLDXIjdTYsqbfkxiaibd3lYGEgfiaEwficYfK2ogZDicCxaKibVibGA2Cj2ltgOvCm1tbRs1iac/130?tp=webp',
-  'https://thirdqq.qlogo.cn/g?b=sdk&k=pfIficic6WRliaLULZudVI5Tw&s=640&t=1600139160&tp=webp'
-]
+const images = [img1, img2, img3, img4, img5]
 
 // 定义一个移动方向
 const direction = ref('next')

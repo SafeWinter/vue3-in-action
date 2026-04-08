@@ -295,7 +295,7 @@ window.Test = {
 
 ![](../../assets/5.3.png)
 
-若确需在 `window` 挂载一个全局对象供模板访问，可以使用 `app.config.globalProperties`，例如：
+若确需在 `Vue` 实例上挂载一个全局对象供模板访问，可以使用 `app.config.globalProperties`，例如：
 
 ```js
 // main.js
@@ -310,7 +310,7 @@ const app = createApp(App)
 
 // 在这里新增全局对象属性
 app.config.globalProperties.Test = {
-  a: 'Hello, Global Object!'
+  a: '1'
 }
 
 app.mount('#app')
@@ -319,3 +319,29 @@ app.mount('#app')
 实测截图：
 
 ![](../../assets/5.4.png)
+
+> [!tip]
+>
+> 在 `script setup` 标签内读取全局属性，需要使用 `getCurrentInstance()` 方法：
+>
+> ```vue
+> <!-- App.vue -->
+> <template>
+>   <div>{{ Math.random() }}</div>
+>   <div>{{ Test.a }}</div>
+> </template>
+> <script setup>
+> import { getCurrentInstance } from 'vue'
+> const { proxy } = getCurrentInstance()
+> console.log(proxy.Test)
+> </script>
+> 
+> <!-- main.js
+> const app = createApp(App)
+> app.config.globalProperties.Test = {
+>   a: 'Hello, Global Object!'
+> }
+> -->
+> ```
+>
+> ![](../../assets/5.6.png)

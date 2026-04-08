@@ -44,13 +44,48 @@ onUnmounted(() => window.removeEventListener('mousemove', update))
 <style scoped></style>
 ```
 
+如果要在多个组件中 **复用这个相同的逻辑**，该怎么办？
+
+答：使用组合式函数。将包含了状态的相关逻辑，一起提取到一个单独的函数中，该函数就是组合式函数：
+
+```js
+// ./src/hooks/useMouse.js
+import { ref } from 'vue'
+import { useEvent } from './useEvent'
+export function useMouse() {
+  // 定义了两个状态变量 x 和 y，分别用于保存鼠标的 x 和 y 坐标
+  const x = ref(0)
+  const y = ref(0)
+
+  // 根据鼠标事件对象更新 x 和 y 的值
+  function update(event) {
+    x.value = event.pageX
+    y.value = event.pageY
+  }
+
+  // 在组件挂载和卸载时分别添加和移除鼠标移动事件监听器
+  //   onMounted(() => window.addEventListener('mousemove', update))
+  //   onUnmounted(() => window.removeEventListener('mousemove', update))
+  useEvent(window, 'mousemove', update)
+
+  return { x, y }
+}
+
+/* App.vue:
+<template>
+  <div>当前鼠标位置: {{ x }}, {{ y }}</div>
+</template>
+
+<script setup>
+import { useMouse } from './hooks/useMouse'
+const { x, y } = useMouse()
+</script>
+*/
+```
+
 实测效果：
 
 ![](../../assets/58.1.png)
-
-多个组件中 **复用这个相同的逻辑**，该怎么办？
-
-答：使用组合式函数。将包含了状态的相关逻辑，一起提取到一个单独的函数中，该函数就是组合式函数。
 
 
 
@@ -311,7 +346,7 @@ const {data, error} = useFetch(url);
 url.value = 'new-url';
 ```
 
-此时我们就需要重构上面的组合式函数：
+此时我们就需要重构上面的组合式函数（使用公共 `API` 接口：https://yesno.wtf/api）：
 
 ```js
 import { ref, watchEffect, toValue } from 'vue'
@@ -324,21 +359,26 @@ export function useFetch(url) {
     data.value = null
     error.value = null
 
-    fetch(toValue(url))
-      .then((res) => res.json())
-      .then((json) => (data.value = json))
-      .catch((err) => (error.value = err))
+    const urlValue = toValue(url)
+
+    if (urlValue === '') {
+      data.value = null
+      error.value = 'invalid url: empty string is not allowed, pls update it with a valid one'
+    } else {
+      fetch(urlValue)
+        .then((res) => res.json())
+        .then((json) => (data.value = json))
+        .catch((err) => (error.value = err))
+    }
   }
 
-  watchEffect(() => {
-    fetchData()
-  })
+  watchEffect(fetchData)
 
   return { data, error }
 }
 ```
 
-实测效果（使用公共 `API` 接口：https://yesno.wtf/api，完整代码详见 `ce438e0`）：
+实测效果（完整代码详见 `ce438e0`）：
 
 ![](../../assets/58.2.png)
 

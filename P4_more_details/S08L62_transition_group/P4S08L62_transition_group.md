@@ -1,5 +1,13 @@
 # P4S08L62：Vue 内置组件之：动画组件 TransitionGroup
 
+---
+
+
+
+> [!tip]
+>
+> `Vue` 官方文档：https://cn.vuejs.org/guide/built-ins/transition-group.html
+
 
 
 `TransitionGroup` 仍然是 `Vue` 里面一个内置的组件，用于解决 **多个元素** 的过渡问题。

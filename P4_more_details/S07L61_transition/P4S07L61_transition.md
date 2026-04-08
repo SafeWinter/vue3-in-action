@@ -4,6 +4,12 @@
 
 
 
+> [!tip]
+>
+> `Vue` 官方文档：https://cn.vuejs.org/guide/built-ins/transition
+
+
+
 ## 1 要点梳理
 
 `Transition` 是 `Vue` 提供的内置组件，用于在一个元素或组件 **进入** 和 **离开** `DOM` 时应用动画。

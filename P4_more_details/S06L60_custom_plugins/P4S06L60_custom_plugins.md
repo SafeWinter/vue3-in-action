@@ -124,3 +124,4 @@ export default {
 - 最后在 `App.vue` 中验证该插件功能（类似 `vue-router` 的使用）。
 
 :two: 实测 `i18n` 插件时，定义 `$translate()` 函数忘记写 `return` 关键字了，导致页面始终不渲染翻译结果。
+

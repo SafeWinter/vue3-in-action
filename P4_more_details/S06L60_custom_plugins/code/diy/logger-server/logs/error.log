@@ -1,0 +1,19 @@
+
+[08/04/2026, 21:55:33-.1258052248337] native event handler: 这是一个错误呀！！！0.25578156104968575
+Error: 这是一个错误呀！！！0.25578156104968575
+    at triggerError (http://localhost:5173/src/App.vue?t=1775655649403:25:11)
+    at callWithErrorHandling (http://localhost:5173/node_modules/.vite/deps/vue.js?v=2c55e18a:1678:19)
+    at callWithAsyncErrorHandling (http://localhost:5173/node_modules/.vite/deps/vue.js?v=2c55e18a:1685:17)
+    at HTMLButtonElement.invoker (http://localhost:5173/node_modules/.vite/deps/vue.js?v=2c55e18a:10331:5)
+
+[08/04/2026, 21:55:35-.2505169246863] native event handler: 这是一个错误呀！！！0.9742193349191229
+Error: 这是一个错误呀！！！0.9742193349191229
+    at triggerError (http://localhost:5173/src/App.vue?t=1775655649403:25:11)
+    at callWithErrorHandling (http://localhost:5173/node_modules/.vite/deps/vue.js?v=2c55e18a:1678:19)
+    at callWithAsyncErrorHandling (http://localhost:5173/node_modules/.vite/deps/vue.js?v=2c55e18a:1685:17)
+    at HTMLButtonElement.invoker (http://localhost:5173/node_modules/.vite/deps/vue.js?v=2c55e18a:10331:5)
+
+[08/04/2026, 21:55:36-.0351950239901] DIY Promise Rejection Err: Promise 错误
+Error: Promise 错误
+    at http://localhost:5173/src/App.vue?t=1775655649403:29:13
+

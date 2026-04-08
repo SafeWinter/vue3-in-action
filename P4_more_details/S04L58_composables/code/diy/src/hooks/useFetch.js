@@ -3,22 +3,23 @@ export function useFetch(url) {
   const data = ref(null)
   const error = ref(null)
 
-  if (url.value === '') {
-    return { data, error: ref(`invalid URL: [${url.value}]`) }
-  }
-  
-  const fetchData = () => {
+  watchEffect(() => {
     // 每次执行 fetchData 的时候，重制 data 和 error 的值
     data.value = null
     error.value = null
 
-    fetch(toValue(url))
-      .then((res) => res.json())
-      .then((json) => (data.value = json))
-      .catch((err) => (error.value = err))
-  }
+    const urlValue = toValue(url)
 
-  watchEffect(fetchData)
+    if (urlValue === '') {
+      data.value = null
+      error.value = 'invalid url: empty string is not allowed, pls update it with a valid one'
+    } else {
+      fetch(urlValue)
+        .then((res) => res.json())
+        .then((json) => (data.value = json))
+        .catch((err) => (error.value = err))
+    }
+  })
 
   return { data, error }
 }

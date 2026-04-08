@@ -1,10 +1,10 @@
 <template>
   <div>当前鼠标位置: {{ x }}, {{ y }}</div>
   <div class="result">
-    <p v-if="error">{{ error.message }}</p>
+    <p v-if="error">{{ error }}</p>
     <template v-else>
-      <p>answer: {{ data.answer }}</p>
-      <img class="img" :src="data.image" alt="image received" />
+      <p>answer: {{ data && data.answer }}</p>
+      <img class="img" :src="data && data.image" alt="image received" />
     </template>
     <div><button @click="refresh">Refresh</button></div>
   </div>
@@ -14,7 +14,9 @@
 import { ref } from 'vue'
 import { useMouse } from './hooks/useMouse'
 import { useFetch } from './hooks/useFetch'
+
 const { x, y } = useMouse()
+
 const refresh = () => (url.value = url.value === '' ? 'https://yesno.wtf/api' : '')
 const url = ref('https://yesno.wtf/api')
 const { data, error } = useFetch(url)

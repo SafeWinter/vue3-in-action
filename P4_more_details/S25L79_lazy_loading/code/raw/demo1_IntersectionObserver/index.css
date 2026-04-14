@@ -1,0 +1,29 @@
+/* 示例一 */
+/* body {
+  height: 2000px; 
+  margin: 0;
+  padding: 0;
+}
+
+.target {
+  width: 200px;
+  height: 200px;
+  background-color: #b21f1f;
+  margin: 0 auto;
+  margin-top: 1500px;
+} */
+
+/* 示例二 */
+.container {
+  width: 100%; /* 容器宽度 */
+  height: 500px; /* 容器高度 */
+  border: 1px solid black; /* 容器边框 */
+  overflow: scroll; /* 容器滚动条 */
+}
+
+.target {
+  width: 200px; /* 目标元素宽度 */
+  height: 200px; /* 目标元素高度 */
+  background-color: lightcoral; /* 目标元素背景色 */
+  margin-top: 1000px; /* 目标元素上外边距 */
+}
